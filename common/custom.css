@@ -1,0 +1,23 @@
+#banner {
+		background-image: url('../pictures/header-top-bg.jpg');
+		/* padding:35px 0; */
+		height:130px;
+		width:auto;
+}
+
+div.watermark{
+		    background: url(../pictures/watermark.png)222px -67px no-repeat;
+			height: 150px;
+			width: 50x; 
+			/* border: 1px solid black; */
+			position:static;
+}
+div.wordmark{
+		background: url(../pictures/wordmark.png) no-repeat 5px 5px;
+		height: 90px;
+		width: 350px;
+		/* border:1px solid blue; */
+		float:left;
+		margin:19px;
+		
+	}

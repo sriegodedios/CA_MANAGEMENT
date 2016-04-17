@@ -1,0 +1,130 @@
+<?php
+
+
+	if ( isset($_POST['Room']) ) {
+		$Room = $_POST['Room'];
+		
+		
+	} else {
+		$Room = "";
+	}
+	
+	
+	
+	
+	function isValidRoom($str, $length) {
+		$pattern = "/[0-9]{3,}/";
+		return preg_match($pattern, $str);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	//filter***********************
+	function strFilter($str, $param){
+		$filter = "";
+		
+		if (strstr($param, "dot")) { $filter .="\.";}
+		if (strstr($param, "at")) { $filter .="@";}
+		if (strstr($param, "L")) { $filter .="a-zA-Z";}
+		if (strstr($param, "N")) { $filter .="0-9";}
+		if (strstr($param, "U")) { $filter .="U";}
+		if (strstr($param, "D")) { $filter .="\-";}
+		if (strstr($param, "S")) { $filter .=" ";}
+		
+		$pattern = "/[^".$filter."]+/";
+		return preg_replace($pattern,"",$str);
+		
+		
+		
+	}
+
+//Process the first of room number//
+if (isset($_POST['search_room']) ) {
+		$Room = strFilter($Room, 'N');
+		
+		if ($errList != ""){
+			$errList = "<p><strong>An Error Has Occured!:</strong></p><ul>".$errList."</ul>";
+			
+		}
+		
+		if (strlen($Room) < 3) {
+			
+			$errList .= "<li>You Need to enter a room number</li>";
+			$error['mail'] = "False 1";
+		}
+		
+		if ( (empty($Room)) || (!isValidRoom($Room)) ) {
+			$errList .= "<li>You Need to enter a Valid Room Number</li>";
+			$error['2mail'] = "False 2";
+		}
+		
+		if(!is_array($error)) {
+			#######process form########
+			//start arrays// 
+			$last_name_array = array();
+			$first_name_array = array();
+			$WiD_array = array(); 
+			//End Arrays
+			
+			//Connect to Database
+			include('../access/a/b/unauthorized/establish_link.php');
+			$query = mysql_query("SELECT * FROM Resident_Rooster WHERE RoomNumber='$roomNumber'");
+			$numrows = mysql_num_rows($query);
+			//Start Query
+			if ($numrows!=0){       
+			$i = 0;
+			//Counter
+			while ($row = mysql_fetch_assoc($query)){
+					$dbroomnumber = $row['RoomNumber'];
+					if ($roomNumber==$dbroomnumber){
+						$last_name_array[$i] = $row['LastName'];
+						$first_name_array[$i] = $row['FirstName'];
+						$WiD_array[$i] = $row['WiD'];
+						$i++;
+					}
+				}
+			}
+			//End Counter
+			if ($roomNumber==$dbroomnumber){
+				$resident_last_name = $last_name_array;
+				$resident_first_name = $first_name_array;
+				$resident_WiD = $WiD_array;
+				$resident_roomNumber = $roomNumber;
+				$counter_value = $counter;
+				$Processed = "Okay";
+			}	
+
+
+		 }
+
+
+
+}
+//end process post of room number//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+?>
