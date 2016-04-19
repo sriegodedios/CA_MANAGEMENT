@@ -1,121 +1,38 @@
-
-<html>
-<header>
-<link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,600,600italic,700,700italic' rel='stylesheet' type='text/css'>
-
-<link href='../../../common/style.css' rel='stylesheet' type='text/css'>
-</header>	
-	
-	
-	<body>
-	<div class="container_main">
-		<div class="dialogue">
-			<div class="container_main">
-			<h1>Loading Please Wait</h1>
-			<img src="../../../pictures/loading.gif" style="weight:100px; height:100px"></img>
-			</div>
-		</div>
-	</div>	
-	</body>
-	
-
-	
-	
-	
-	
-
-</html>
-<?php 
-
-if(isset($_POST['initialize_email'])){
-	validatePackageDate();
-#########REQUEST TIME FROM SERVER##########	
-	//initialize the time function 
-	$info = getdate();
-	$day = $info['mday'];
-	if ($day < 10){
-		$day = '0'.$day.'';
-		
-	}
-	$month = $info['mon'];
-	if ($month < 10){
-		$month = '0'.$month.'';
-		
-	}
-	$year = $info['year'];
-	$hour = $info['hours'];
-	$min = $info['minutes'];
-	$sec = $info['seconds'];
-	
-	
-	$current_time = "$hour:$min";
-	$current_date = "$year-$day-$month";
-	echo $current_date;
-	$WiD_Array_PL= array();
-	$WiD_Array = array();
-	
-	//start database connection
+<?php
+function validatePackageDate(){
 	include('../../../../access/a/b/unauthorized/establish_link.php');
-	$query = mysql_query("SELECT * FROM List_Package_Resident ");
-	/* $i = 0; */
-	while ($row = mysql_fetch_assoc($query)){
-	
-		$WiD_Array[] = $row['WiD'];
-		$index_array[] = $row['Index'];
-	
-		/* $i++; */
+	$query = mysql_query("SELECT * FROM users_main WHERE Status='Arrived'");
+	$current_time = $_SERVER["REQUEST_TIME"]; 
+	$set_time = 432000;
+	while($row = mysql_fetch_assoc($query)){
+		$time =  $row['Unix_In'];
+		$delta_time =$current_time-$time;
+		
+		if($delta_time>$set_time = 432000){
+			$query = mysql_query("UPDATE Package_List SET Status='Arrived'");
+			
+		}
+		
+		
+		
+		
+		
+		
+		
 	}
 	mysql_close();
-
-	/* array $sort_WID_array(array $WiD_Array_PL[, int $sort_flags = SORT_STRING]);
-	 */
-/* 	$WiD_Array_PL = array_unique($WiD_Array_PL); */
-	
-
-	
-	/* for ($i = 0; $i < sizeof($WiD_Array); $i++){
-		 
-		echo ''.$WiD_Array[$i].'<br>';
-
-	
-		
-		
-		$i++;
-		
-	} */
-	
-	foreach ($WiD_Array as $value){
-		$v = $value;
-		echo'here';
-		echo '<br>'.$value.'';
-		$WiD_To_Lookup = $value;
-		getEmailResident($WiD_To_Lookup);
-		sleep(5); 
-	}
 	
 	
 	
 	
-
-	clearTableContents($Array_of_WiD);
 	
 	
 	
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-}
-
 	
 	
+	
+	
+}	
 	
 function getEmailResident($WiD_To_Lookup){
 		
@@ -208,7 +125,7 @@ if ($current_time>'0:00'&&$current_time<'10:59'){
 	 $body .= '<tr>';
 	 $j = 0; 
 	for($i = 0; $i < sizeof($package_array); $i++){
-		if($status_array[$i]= "Queued" ) {
+		if($status_array[$i] == "Queued" ) {
 			$status_index_array[$j] = $i;
 				            
 						
@@ -340,8 +257,6 @@ function updateStatusOfPackagesToArrived($WiDRef){
 	$location_array = array();
 	$index_array = array();
 	
-	
-	
 	while($row = mysql_fetch_assoc($query)){
 		$dbWiD = $row['WiD'];
 		$dbPNumber = $row['Package_Number'];
@@ -353,39 +268,15 @@ function updateStatusOfPackagesToArrived($WiDRef){
 		$status_array[] = $row['Status'];
 		$index_array[] = $row['Index'];
 		echo  $row['Index'];
-		//$query = mysql_query("UPDATE Package_List SET Status='Arrived', Last_Email='$current_date' WHERE Index='".intval($row['Index'])."'") or die (mysql_error()); 
+		$query = mysql_query("UPDATE Package_List SET Status='Arrived', Last_Email='$current_date' WHERE Index='".intval($row['Index'])."'") or die (mysql_error()); 
 	} // end while
 	
 	
 	foreach ($status_array as $value){
+	
+	
+		//$query = mysql_query("UPDATE Package_List SET Status='Arrived' WHERE WiD='$WiDRef'") or die (mysql_error()); 
 		
-		
-		$query = mysql_query("UPDATE Package_List SET Status='Arrived' WHERE Status='Queued'") or die (mysql_error()); 
-		}
-		
-	}
-	
-	
-	
-	
-	
-
-
-
-
-function validatePackageDate(){
-	include('../../../../access/a/b/unauthorized/establish_link.php');
-	$query = mysql_query("SELECT * FROM users_main WHERE Status='Arrived'");
-	$current_time = $_SERVER["REQUEST_TIME"]; 
-	$set_time = 432000;
-	while($row = mysql_fetch_assoc($query)){
-		$time =  $row['Unix_In'];
-		$delta_time =$current_time-$time;
-		
-		if($delta_time>$set_time = 432000){
-			$query = mysql_query("UPDATE Package_List SET Status='Arrived'");
-			
-		}
 		
 		
 		
@@ -394,19 +285,17 @@ function validatePackageDate(){
 		
 		
 	}
-	mysql_close();
 	
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-}	
+}
+
+
+
+
+
 
 
 

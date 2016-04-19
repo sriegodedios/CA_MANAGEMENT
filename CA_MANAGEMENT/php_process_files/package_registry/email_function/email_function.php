@@ -324,25 +324,4 @@ function updateStatusOfPackagesToArrived($WiDRef){
 	
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ?>

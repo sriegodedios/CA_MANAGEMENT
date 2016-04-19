@@ -1,10 +1,10 @@
 <?php 
-$LastName = $_POST['LastName'];
+$LastName = $_POST['LName'];
 
 
 
 
-if (ISSET($_POST['LastName'])){
+if (ISSET($_POST['LName'])){
 	
 	include('../../../access/a/b/unauthorized/establish_link.php');
 	$query = mysql_query("SELECT * FROM Resident_Rooster WHERE LastName='$LastName'");
@@ -59,7 +59,7 @@ if (ISSET($_POST['LastName'])){
 	
 			$j= 0;
 			for ($i = 0; $i < sizeof($package_array); $i++){
-			if(($status_array[$i] == "Arrived")||($status_array[$i] == "Queued")){
+			
 			
 				$status_index_array[$j] = $i;
 				echo('<tr>');
@@ -70,7 +70,7 @@ if (ISSET($_POST['LastName'])){
 				echo('<td>'.$dbFN.'</td>'); 
 				echo('<td>'.$dbLN.'</td>'); 
 				echo('</tr>');
-			}
+			
 			
 			$j ++;
 		}

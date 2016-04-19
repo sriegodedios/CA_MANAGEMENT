@@ -29,7 +29,6 @@
 <?php 
 
 if(isset($_POST['initialize_email'])){
-	validatePackageDate();
 #########REQUEST TIME FROM SERVER##########	
 	//initialize the time function 
 	$info = getdate();
@@ -113,7 +112,6 @@ if(isset($_POST['initialize_email'])){
 			
 			
 }
-
 	
 	
 	
@@ -208,7 +206,7 @@ if ($current_time>'0:00'&&$current_time<'10:59'){
 	 $body .= '<tr>';
 	 $j = 0; 
 	for($i = 0; $i < sizeof($package_array); $i++){
-		if($status_array[$i]= "Queued" ) {
+		if($status_array[$i] == "Queued" ) {
 			$status_index_array[$j] = $i;
 				            
 						
@@ -340,8 +338,6 @@ function updateStatusOfPackagesToArrived($WiDRef){
 	$location_array = array();
 	$index_array = array();
 	
-	
-	
 	while($row = mysql_fetch_assoc($query)){
 		$dbWiD = $row['WiD'];
 		$dbPNumber = $row['Package_Number'];
@@ -353,39 +349,15 @@ function updateStatusOfPackagesToArrived($WiDRef){
 		$status_array[] = $row['Status'];
 		$index_array[] = $row['Index'];
 		echo  $row['Index'];
-		//$query = mysql_query("UPDATE Package_List SET Status='Arrived', Last_Email='$current_date' WHERE Index='".intval($row['Index'])."'") or die (mysql_error()); 
+		$query = mysql_query("UPDATE Package_List SET Status='Arrived', Last_Email='$current_date' WHERE Index='".intval($row['Index'])."'") or die (mysql_error()); 
 	} // end while
 	
 	
 	foreach ($status_array as $value){
+	
+	
+		//$query = mysql_query("UPDATE Package_List SET Status='Arrived' WHERE WiD='$WiDRef'") or die (mysql_error()); 
 		
-		
-		$query = mysql_query("UPDATE Package_List SET Status='Arrived' WHERE Status='Queued'") or die (mysql_error()); 
-		}
-		
-	}
-	
-	
-	
-	
-	
-
-
-
-
-function validatePackageDate(){
-	include('../../../../access/a/b/unauthorized/establish_link.php');
-	$query = mysql_query("SELECT * FROM users_main WHERE Status='Arrived'");
-	$current_time = $_SERVER["REQUEST_TIME"]; 
-	$set_time = 432000;
-	while($row = mysql_fetch_assoc($query)){
-		$time =  $row['Unix_In'];
-		$delta_time =$current_time-$time;
-		
-		if($delta_time>$set_time = 432000){
-			$query = mysql_query("UPDATE Package_List SET Status='Arrived'");
-			
-		}
 		
 		
 		
@@ -394,19 +366,17 @@ function validatePackageDate(){
 		
 		
 	}
-	mysql_close();
 	
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-}	
+}
+
+
+
+
+
 
 
 

@@ -14,6 +14,7 @@ $info = getdate();
 	$hour = $info['hours'];
 	$min = $info['minutes'];
 	$sec = $info['seconds'];
+$time = $_SERVER["REQUEST_TIME"];
 	
 /* 	if ($date < 10){
 		$day= ("0'.$date.'");
@@ -102,7 +103,7 @@ if (isset($_POST['add_package'])){
 	}
 	
 include('../../../access/a/b/unauthorized/establish_link.php');
-	$sql = "INSERT INTO Package_List (WiD, Package_Number, Location, Date_Checked_IN, CA_In) VALUES ('$WiD', '$packageNum', '$location', '$current_date', '$CA')";
+	$sql = "INSERT INTO Package_List (WiD, Package_Number, Location, Date_Checked_IN, Unix_In, CA_In) VALUES ('$WiD', '$packageNum', '$location', '$current_date', '$time', '$CA')";
 
   if (!mysql_query($sql)) {
    header('Location: ../../Resident_Package_Profile.php?addPackage=failed&So=1');
