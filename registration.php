@@ -298,6 +298,8 @@
     <!-- /#wrapper -->
 
 <script>
+
+//script for page transistion this is used when user hits the next button
 object.onclick=function(){formValidationTransiston};
 
 
@@ -338,19 +340,21 @@ function pagechange(frompage, topage) {
 
   return true;
 }  
-  
+//end of page transistion
+
+//This function checks the form for validation such as email address
 function checkForm(){
 	errList = "";
 	focusField = "";
-	
+	//first name validation
 	if( $('#first_name').val().length < 3 ){
 		//alert('first name required!!!!');
 		errList += "<li>First Name</li>";
 		if (focusField == ""){
-			focusField = "#last_name";
+			focusField = "#first_name";
 			}
 	}
-	
+	//last name validation
 	if( $('#last_name').val().length < 5  ){
 		//alert('first name required!!!!');
 		errList += "<li>Last Name</li>";
@@ -358,7 +362,7 @@ function checkForm(){
 			focusField = "#last_name";
 			}
 	}
-	
+	//email validation
 	if($('#email').val().length < 9  || !validateEmail($('#email').val())){
 		errList += "<li> Valid Email Address</li>";
 		if (focusField == ""){
